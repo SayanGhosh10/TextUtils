@@ -3,16 +3,17 @@ import React, { useState } from 'react'
 export default function Textform(props) {
     const [text, setText] = useState("");
     //setText("Enter text here 12");
-    const txtLength = (txt) =>{
-        let count  = 0; 
-        let t = txt.split(" ");
-        for(let i=0; i<t.length; i++){
-            if (t[i] === "") {
-                count++;
-            }
-        }
-        return t.length-count;
-    }
+    // const txtLength = (txt) =>{
+    //     let count  = 0; 
+    //     let t = txt.split(/ \s+ /).filter((element)=>
+    //     {return element.length !== 0}).length;
+    //     // for(let i=0; i<t.length; i++){
+    //     //     if (t[i] === "") {
+    //     //         count++;
+    //     //     }
+    //     // }
+    //     // return t.length-count;
+    // }
     const charLength = (ch) => {
         let count  = 0;
         let c = ch.split("");
@@ -56,15 +57,17 @@ export default function Textform(props) {
         <label htmlFor="myBox" className="form-label"></label>
         <textarea className="form-control" placeholder='Enter text here' value={text} onChange={handleOnChange} id="myBox" rows="10" style={{backgroundColor: props.mode === 'light' ? 'white' : 'grey', color: props.mode === 'light' ? 'black' : 'white'}}></textarea>
         </div>
-        <button className="btn btn-primary" onClick={handleUpClick}>Convert to UpperCase</button>
-        <button className="btn btn-primary mx-5" onClick={handleLowClick}>Convert to LowerCase</button>
-        <button className="btn btn-primary mx-3" onClick={handleClearClick}>Clear Text</button>
-        <button className="btn btn-primary mx-3" onClick={handleFindNum}>Find Number</button>
+        <button disabled={text.length===0} className="btn btn-primary my-2" onClick={handleUpClick}>Convert to UpperCase</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-5 my-2" onClick={handleLowClick}>Convert to LowerCase</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-3 my-2" onClick={handleClearClick}>Clear Text</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-3 my-2" onClick={handleFindNum}>Find Number</button>
     </div>
     <div className="container my-5" style={{color: props.mode === 'light' ? 'black' : 'white'}}>
         <h1>Your text summary</h1>
-        <p>{txtLength(text)} words and {charLength(text)} characters</p>
-        <p>This Paragraph can be read in {0.008 * txtLength(text)} minutes</p>
+        <p>{text.split(/\s+/).filter((element)=>
+        {return element.length !== 0}).length} words and {charLength(text)} characters</p>
+        <p>This Paragraph can be read in {0.008 * text.split(/\s+/).filter((element)=>
+        {return element.length !== 0}).length} minutes</p>
         <h2>Preview</h2>
         <p>{text.length>0?text:"Enter text above to preview here"}</p>
     </div>

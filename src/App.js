@@ -9,7 +9,7 @@ import {
   // Switch,
   Route,
   Routes,
-  Link
+  // Link
 } from "react-router-dom";
 function App() {
   const [mode, setMode] =  useState('light');
@@ -24,7 +24,17 @@ function App() {
       setAlert(null);
     }, 2000);
   }
-  const toggleMode = ()=>{
+  const removeBodyClass = ()=>{
+    document.body.classList.remove('bg-light');
+    document.body.classList.remove('bg-dark');
+    document.body.classList.remove('bg-primary');
+    document.body.classList.remove('bg-danger');
+    document.body.classList.remove('bg-success');
+    document.body.classList.remove('bg-warning');
+  }
+  const toggleMode = (cls)=>{
+    removeBodyClass();
+    document.body.classList.toggle('bg-' + cls);
     if(mode === 'light'){
       setMode('dark');
       document.body.style.backgroundColor = 'black';
